@@ -7,6 +7,7 @@ public class Planeta {
 	private String capitalPlaneta;
 	private int diametroPlaneta; 
 	private String corPlaneta;
+	
 	public int getCodPlaneta() {
 		return codPlaneta;
 	}
@@ -43,5 +44,14 @@ public class Planeta {
 	public void setCorPlaneta(String corPlaneta) {
 		this.corPlaneta = corPlaneta;
 	} 
+	
+	public Planeta(int codPlaneta, String nomePlaneta, String sistemaPlaneta, String capitalPlaneta, int diametroPlaneta, String corPlaneta) {
+		setCodPlaneta(codPlaneta);
+		setNomePlaneta(nomePlaneta);
+		setSistemaPlaneta(sistemaPlaneta);
+		setCapitalPlaneta(capitalPlaneta);
+		setDiametroPlaneta(diametroPlaneta);
+		setCorPlaneta(corPlaneta);
+	}
 	
 }

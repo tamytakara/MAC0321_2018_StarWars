@@ -3,7 +3,9 @@ package br.usp.ime.paca.mac0321.projetodupla_Maria_Tamy.StarWars.modelagem;
 public class Cla {
 	private int codCla;
 	private String nomeCla; 
-	private int codMsestreResponsavel;
+	private int codMestreResponsavel;
+	
+	
 	public int getCodCla() {
 		return codCla;
 	}
@@ -16,10 +18,16 @@ public class Cla {
 	public void setNomeCla(String nomeCla) {
 		this.nomeCla = nomeCla;
 	}
-	public int getCodMsestreResponsavel() {
-		return codMsestreResponsavel;
+	public int getCodMestreResponsavel() {
+		return codMestreResponsavel;
 	}
-	public void setCodMsestreResponsavel(int codMsestreResponsavel) {
-		this.codMsestreResponsavel = codMsestreResponsavel;
+	public void setCodMestreResponsavel(int codMestreResponsavel) {
+		this.codMestreResponsavel = codMestreResponsavel;
+	}
+	
+	public Cla(int codCla, String nomeCla, int codMestreResponsavel ) {
+		setCodCla(codCla);
+		setCodMestreResponsavel(codMestreResponsavel);
+		setNomeCla(nomeCla);
 	}
 }

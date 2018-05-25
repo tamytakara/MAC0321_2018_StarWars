@@ -13,6 +13,7 @@ public abstract class Ser {
 	private Habilidade[] habilidades;
 	private Planeta planeta;
 	private Academia academia;
+	private int ultimaAcao;
 
 	public int getCodSer() {
 		return codSer;
@@ -73,5 +74,11 @@ public abstract class Ser {
 	}
 	public void setPlaneta(Planeta planeta) {
 		this.planeta = planeta;
+	}
+	public int getUltimaAcao() {
+		return ultimaAcao;
+	}
+	public void setUltimaAcao(int ultimaAcao) {
+		this.ultimaAcao = ultimaAcao;
 	}
 }
