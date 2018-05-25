@@ -1,7 +1,7 @@
 package br.usp.ime.paca.mac0321.projetodupla_Maria_Tamy.StarWars.controller;
 
 public class EventSet {
-	private Event[] events = new Event[100];
+	private Event[] events = new Event[1000];
 	private int index = 0;
 	private int next = 0;
 

@@ -20,7 +20,7 @@ public class StarWarsControls extends Controller {
 	public StarWarsControls() {
 		long tm = System.currentTimeMillis();
 		addEvent(new InstanciaJedi(tm));
-		addEvent(new InstanciaSith(tm+1000));
+		addEvent(new InstanciaSith(tm+500));
 		System.out.println("Que a batalha comece!");
 	}
 	
@@ -38,7 +38,7 @@ public class StarWarsControls extends Controller {
 			Planeta planeta1 = new Planeta(1, "Planeta Korriban", "Sistema Horuset", "Capital do Porto", 18984, "Vermelho");
 			Academia academia1= new Academia(1,"Academia Jedi Coruscant", planeta1, 0);
 			Cla cla1= new Cla(1,"Clã do Urso",1);
-			jedi = new Mestre(1, "Yoda", cla1, 20, 95, 100, habilidades1, planeta1, academia1, "896 ABY");
+			jedi = new Mestre(1, "Yoda", cla1, 100, 95, 100, habilidades1, planeta1, academia1, "896 ABY");
 			jedi.setImortalidade(true);
 			jedi.setVidencia(true);
 		}
@@ -61,7 +61,7 @@ public class StarWarsControls extends Controller {
 			Habilidade[] habilidades2 = {h1, h2, h3, h4};
 			Planeta planeta2 = new Planeta(2, "Planeta Tatooine", "Sistema Tatooine", "Capital do Tatooine", 9876, "Marrom");
 			Academia academia2= new Academia(2,"Academia Sith Korriban", planeta2, 1);
-			sith = new Lorde(2,"Darth Vader",20,100, 95, habilidades2, academia2, "346 ABY", 95, true, true, true, planeta2);
+			sith = new Lorde(2,"Darth Vader",100,100, 95, habilidades2, academia2, "346 ABY", 95, true, true, true, planeta2);
 		}
 
 		public String description() {
@@ -79,7 +79,7 @@ public class StarWarsControls extends Controller {
 		}
 
 		public String description() {
-			return (jedi.getNome()+" se preparando...");
+			return (jedi.getNome()+" se preparando para rodada...");
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class StarWarsControls extends Controller {
 		}
 
 		public String description() {
-			return sith.getNome()+" se preparando...";
+			return sith.getNome()+" se preparando para rodada...";
 		}
 	}
 	
@@ -105,35 +105,35 @@ public class StarWarsControls extends Controller {
 		public void action() {
 			int dano=0;
 			if(jedi.getUltimaAcao()==0||sith.getUltimaAcao()==0) {
-				if(jedi.getUltimaAcao()==0) {
+				if(jedi.getUltimaAcao()==0&&sith.getUltimaAcao()!=0) {
 					System.out.println(jedi.getNome()+" se esquivou");
 					Habilidade sithAtaque = sith.getHabilidades()[(sith.getUltimaAcao()-1)];					
 					if(sithAtaque.getTipoHabilidade()==1) {
 						//Ao esquivar de um ataque de força, o jedi só é afetado na metade do dano normal
 						dano = (sithAtaque.getDanoHabilidade()*sith.getDominioForca()/200);
 						jedi.setVida(jedi.getVida()-dano);
-						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 					if(sithAtaque.getTipoHabilidade()==2) {
-						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 				}  
-				if(sith.getUltimaAcao()==0){
+				if(sith.getUltimaAcao()==0&&jedi.getUltimaAcao()!=0){
 					System.out.println(sith.getNome()+" se esquivou");	
 					Habilidade jediAtaque = jedi.getHabilidades()[jedi.getUltimaAcao()-1];					
 					if(jediAtaque.getTipoHabilidade()==1) {
 						//Ao esquivar de um ataque de força, o jedi só é afetado na metade do dano normal
 						dano = (jediAtaque.getDanoHabilidade()*jedi.getDominioForca()/200);
 						sith.setVida(sith.getVida()-dano);
-						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 					if(jediAtaque.getTipoHabilidade()==2) {
-						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
+				}
+				if(sith.getUltimaAcao()==0&&jedi.getUltimaAcao()==0) {
+					System.out.println(jedi.getNome()+" se esquivou");
+					System.out.println(sith.getNome()+" se esquivou");						
 				}
 			}else {
 				Habilidade sithAtaque = sith.getHabilidades()[(sith.getUltimaAcao()-1)];
@@ -142,47 +142,39 @@ public class StarWarsControls extends Controller {
 					if(jediAtaque.getTipoHabilidade()==1&&sithAtaque.getTipoHabilidade()==1) {
 						dano = (jediAtaque.getDanoHabilidade()*jedi.getDominioForca()/100);
 						sith.setVida(sith.getVida()-dano);
-						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 						
 						dano = (sithAtaque.getDanoHabilidade()*sith.getDominioForca()/100);
 						jedi.setVida(jedi.getVida()-dano);		
-						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);										
+						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 					if(jediAtaque.getTipoHabilidade()==1&&sithAtaque.getTipoHabilidade()==2) {
 						dano = (jediAtaque.getDanoHabilidade()*jedi.getDominioForca()/100);
 						sith.setVida(sith.getVida()-dano);
-						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de força: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 						
 						dano = (sithAtaque.getDanoHabilidade()*sith.getDominioSabre()/100);
 						jedi.setVida(jedi.getVida()-dano);		
-						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);	
+						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 					if(jediAtaque.getTipoHabilidade()==2&&sithAtaque.getTipoHabilidade()==1) {
 						dano = (sithAtaque.getDanoHabilidade()*sith.getDominioForca()/100);
 						jedi.setVida(jedi.getVida()-dano);		
-						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);	
+						System.out.println(sith.getNome()+" usou ataque de força: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 						
 						dano = (jediAtaque.getDanoHabilidade()*jedi.getDominioSabre()/100);
 						sith.setVida(sith.getVida()-dano);
-						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 					}
 				} else {
 					if(sithAtaque.getTipoHabilidade()==2||jediAtaque.getTipoHabilidade()==2) {
 						dano = (jediAtaque.getDanoHabilidade()*jedi.getDominioSabre()/100);
 						sith.setVida(sith.getVida()-dano);
-						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);
+						System.out.println(jedi.getNome()+" usou ataque de sabre: "+jediAtaque.getNomeHabilidade()+"! Dano: "+dano);
 						
 						dano = (sithAtaque.getDanoHabilidade()*sith.getDominioSabre()/100);
 						jedi.setVida(jedi.getVida()-dano);		
-						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade());
-						System.out.println("Dano: "+dano);	
+						System.out.println(sith.getNome()+" usou ataque de sabre: "+sithAtaque.getNomeHabilidade()+"! Dano: "+dano);
 						
 					}
 				}
@@ -220,7 +212,7 @@ public class StarWarsControls extends Controller {
 		}
 
 		public String description() {
-			return "Sith se preparando...";
+			return "Analisando Rodada Anterior";
 		}
 	}
 	
@@ -267,7 +259,7 @@ public class StarWarsControls extends Controller {
 		}
 
 		public String description() {
-			return "Aberta a rodada";
+			return "Aberta a nova rodada";
 		}
 	}
 
