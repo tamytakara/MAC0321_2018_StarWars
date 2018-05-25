@@ -204,14 +204,17 @@ public class StarWarsControls extends Controller {
 			if(jedi.getVida()<=0&&sith.getVida()<=0) {
 				game=false;
 				System.out.println("Jogo empatado!");
+				System.exit(0);
 			}else {
 				if(sith.getVida()<=0) {
 					game=false;
-					System.out.println(jedi.getNome()+" ganhou!");					
+					System.out.println(jedi.getNome()+" ganhou!");	
+					System.exit(0);				
 				}
 				if(jedi.getVida()<=0) {
 					game=false;
-					System.out.println(sith.getNome()+" ganhou!");				
+					System.out.println(sith.getNome()+" ganhou!");
+					System.exit(0);				
 				}
 			}
 		}
